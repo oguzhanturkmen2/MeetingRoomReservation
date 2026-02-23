@@ -57,7 +57,7 @@ public class RoomService : IRoomService
     }
 
 
-    public async Task CreateAsync(CreateUpdateRoomDto dto)
+    public async Task<int> CreateAsync(CreateUpdateRoomDto dto)
     {
         var room = new Room
         {
@@ -76,6 +76,7 @@ public class RoomService : IRoomService
 
         _context.Rooms.Add(room);
         await _context.SaveChangesAsync();
+        return room.Id;
     }
 
 
