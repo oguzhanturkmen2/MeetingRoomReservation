@@ -69,10 +69,22 @@ public class RoomService : IRoomService
     public async Task DeleteAsync(int id)
     {
         var room = await _context.Rooms.FindAsync(id);
-        if (room == null) return;
 
-        room.IsActive = false;
+        if (room == null || !room.IsActive)
+            throw new Exception("Oda bulunamadı.");
+
+        var hasFutureReservations = await _context.Reservations
+            .AnyAsync(r =>
+                r.RoomId == id &&
+                !r.IsDeleted &&
+                r.StartDate > DateTime.Now);
+
+        if (hasFutureReservations)
+            throw new Exception("Bu odaya ait gelecekte rezervasyonlar var. Silinemez.");
+
+        room.IsDeleted = true;
 
         await _context.SaveChangesAsync();
     }
+
 }

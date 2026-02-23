@@ -73,5 +73,16 @@ public class ReservationService : IReservationService
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task<bool> HasConflictAsync(int roomId, DateTime start, DateTime end)
+    {
+        return await _context.Reservations
+            .AnyAsync(r =>
+                r.RoomId == roomId &&
+                r.IsActive &&
+                start < r.EndDate &&
+                end > r.StartDate);
+    }
+
 }
 

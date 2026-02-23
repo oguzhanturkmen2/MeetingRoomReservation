@@ -1,4 +1,5 @@
-﻿using MeetingRoomReservation.Api.DTOs;
+﻿using MeetingRoomReservation.Api.Common;
+using MeetingRoomReservation.Api.DTOs;
 using MeetingRoomReservation.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,37 +19,42 @@ namespace MeetingRoomReservation.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _service.GetAllAsync());
+            var data = await _service.GetAllAsync();
+            return Ok(ApiResponse.Ok(data));
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _service.GetByIdAsync(id);
-            if (user == null) return NotFound();
 
-            return Ok(user);
+            if (user == null)
+                return NotFound(ApiResponse.Error("Kullanıcı bulunamadı."));
+
+            return Ok(ApiResponse.Ok(user));
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateUpdateUserDto dto)
         {
             var id = await _service.CreateAsync(dto);
-            return Ok(id);
+            return Ok(ApiResponse.Ok(id));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CreateUpdateUserDto dto)
         {
             await _service.UpdateAsync(id, dto);
-            return NoContent();
+            return Ok(ApiResponse.Ok(null, "Kullanıcı güncellendi."));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
-            return NoContent();
+            return Ok(ApiResponse.Ok(null, "Kullanıcı silindi."));
         }
     }
 
