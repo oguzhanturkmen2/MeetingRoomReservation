@@ -67,6 +67,13 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPublicHolidayService, PublicHolidayService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 
+builder.Services.AddScoped<IDataSeeder, UserSeeder>();
+builder.Services.AddScoped<IDataSeeder, RoomSeeder>();
+builder.Services.AddScoped<IDataSeeder, EquipmentSeeder>();
+builder.Services.AddScoped<IDataSeeder, PublicHolidaySeeder>();
+builder.Services.AddScoped<IDataSeeder, ReservationSeeder>();
+
+builder.Services.AddScoped<SeedRunner>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateRoomDtoValidator>();
 builder.Services.AddFluentValidationAutoValidation();
@@ -92,6 +99,13 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 var app = builder.Build();
 
 #region PIPELINE
+
+using (var scope = app.Services.CreateScope())
+{
+    var runner = scope.ServiceProvider.GetRequiredService<SeedRunner>();
+    await runner.RunAsync();
+}
+
 
 if (app.Environment.IsDevelopment())
 {

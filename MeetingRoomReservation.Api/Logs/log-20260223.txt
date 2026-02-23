@@ -1,0 +1,27 @@
+2026-02-23 20:18:41.810 +03:00 [INF] HTTP POST /api/Users responded 200 in 2240.8171 ms
+2026-02-23 20:27:14.893 +03:00 [INF] HTTP POST /api/users responded 400 in 42.5423 ms
+2026-02-23 20:27:45.019 +03:00 [INF] HTTP GET /api/users responded 200 in 154.2633 ms
+2026-02-23 20:28:58.547 +03:00 [INF] HTTP GET /api/users responded 200 in 114.8309 ms
+2026-02-23 20:29:49.094 +03:00 [INF] HTTP PUT /api/users responded 405 in 0.3421 ms
+2026-02-23 20:30:11.026 +03:00 [ERR] Kullanıcı bulunamadı.
+System.Exception: Kullanıcı bulunamadı.
+   at MeetingRoomReservation.Api.Services.UserService.UpdateAsync(Int32 id, CreateUpdateUserDto dto) in C:\Source\MeetingRoomReservation\MeetingRoomReservation.Api\Services\UserService.cs:line 69
+   at MeetingRoomReservation.Api.Controllers.UsersController.Update(Int32 id, CreateUpdateUserDto dto) in C:\Source\MeetingRoomReservation\MeetingRoomReservation.Api\Controllers\UsersController.cs:line 49
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at MeetingRoomReservation.Api.Middlewares.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Source\MeetingRoomReservation\MeetingRoomReservation.Api\Middlewares\ExceptionMiddleware.cs:line 24
+2026-02-23 20:30:11.136 +03:00 [ERR] HTTP PUT /api/users/2 responded 500 in 447.3158 ms
+2026-02-23 20:30:43.988 +03:00 [INF] HTTP DELETE /api/users/2 responded 200 in 25.3683 ms
+2026-02-23 20:30:57.021 +03:00 [INF] HTTP GET /api/users responded 200 in 8.1691 ms
+2026-02-23 20:31:33.497 +03:00 [INF] HTTP POST /api/users responded 200 in 38.1939 ms
+2026-02-23 20:31:44.099 +03:00 [INF] HTTP DELETE /api/users/2 responded 200 in 25.5379 ms
+2026-02-23 20:31:56.862 +03:00 [INF] HTTP GET /api/users responded 200 in 13.8862 ms
+2026-02-23 20:33:41.532 +03:00 [INF] HTTP GET /api/rooms responded 200 in 197.0735 ms
+2026-02-23 20:35:25.206 +03:00 [INF] HTTP GET /api/rooms responded 200 in 21.0318 ms

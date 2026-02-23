@@ -52,7 +52,6 @@ namespace MeetingRoomReservation.Api.Data
                 .WithMany()
                 .HasForeignKey(x => x.EquipmentId);
 
-
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
