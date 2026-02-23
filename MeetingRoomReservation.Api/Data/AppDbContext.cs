@@ -42,6 +42,39 @@ namespace MeetingRoomReservation.Api.Data
             modelBuilder.Entity<RoomEquipment>()
                 .HasQueryFilter(re => !re.Room.IsDeleted && !re.Equipment.IsDeleted);
 
+            modelBuilder.Entity<RoomEquipment>()
+            .HasOne(re => re.Equipment)
+            .WithMany(e => e.RoomEquipments)
+            .HasForeignKey(re => re.EquipmentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
         }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedDate = DateTime.Now;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.ModifiedDate = DateTime.Now;
+                }
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.ModifiedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }
