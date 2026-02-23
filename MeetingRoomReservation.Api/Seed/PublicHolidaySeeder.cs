@@ -3,6 +3,7 @@ using MeetingRoomReservation.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 public class PublicHolidaySeeder : IDataSeeder
 {
+    public int Order => 4;
     private readonly AppDbContext _context;
 
     public PublicHolidaySeeder(AppDbContext context)

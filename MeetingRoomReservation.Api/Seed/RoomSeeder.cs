@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class RoomSeeder : IDataSeeder
 {
+    public int Order => 2;
     private readonly AppDbContext _context;
 
     public RoomSeeder(AppDbContext context)

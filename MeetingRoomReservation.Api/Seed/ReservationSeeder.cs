@@ -3,6 +3,8 @@ using MeetingRoomReservation.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 public class ReservationSeeder : IDataSeeder
 {
+    public int Order => 5;
+
     private readonly AppDbContext _context;
 
     public ReservationSeeder(AppDbContext context)
@@ -33,7 +35,7 @@ public class ReservationSeeder : IDataSeeder
                 StartDate = new DateTime(2026, 3, 2, 14, 0, 0),
                 EndDate = new DateTime(2026, 3, 2, 16, 0, 0),
                 ParticipantCount = 6,
-                RecurrenceId = 1,
+                RecurrenceId = null,
                 IsDeleted = false
             },
             new Reservation
@@ -43,7 +45,7 @@ public class ReservationSeeder : IDataSeeder
                 StartDate = new DateTime(2026, 3, 3, 9, 0, 0),
                 EndDate = new DateTime(2026, 3, 3, 12, 0, 0),
                 ParticipantCount = 15,
-                RecurrenceId = 2,
+                RecurrenceId = null,
                 IsDeleted = false
             }
         };

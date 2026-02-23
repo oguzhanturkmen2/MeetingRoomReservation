@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 public class UserSeeder : IDataSeeder
 {
     private readonly AppDbContext _context;
+    public int Order => 1;
 
     public UserSeeder(AppDbContext context)
     {
@@ -18,9 +19,9 @@ public class UserSeeder : IDataSeeder
 
         var users = new List<User>
         {
-            new User { FullName = "Oğuzhan", IsDeleted = false },
-            new User { FullName = "Ayşe", IsDeleted = false },
-            new User { FullName = "Mehmet", IsDeleted = false }
+            new User { FullName = "Ali",Email="ali@hitsoft.com", IsDeleted = false },
+            new User { FullName = "Ayşe",Email="ayse@hitsoft.com", IsDeleted = false },
+            new User { FullName = "Mehmet",Email="mehmet@hitsoft.com", IsDeleted = false }
         };
 
         await _context.Users.AddRangeAsync(users);

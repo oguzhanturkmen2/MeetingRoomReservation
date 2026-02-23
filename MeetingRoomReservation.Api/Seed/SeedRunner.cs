@@ -9,7 +9,10 @@
 
     public async Task RunAsync()
     {
-        foreach (var seeder in _seeders)
+        var orderedSeeders = _seeders
+            .OrderBy(x => x.Order);
+
+        foreach (var seeder in orderedSeeders)
         {
             await seeder.SeedAsync();
         }

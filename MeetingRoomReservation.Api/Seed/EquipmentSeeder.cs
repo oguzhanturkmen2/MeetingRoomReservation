@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class EquipmentSeeder : IDataSeeder
 {
+    public int Order => 3;
     private readonly AppDbContext _context;
 
     public EquipmentSeeder(AppDbContext context)
