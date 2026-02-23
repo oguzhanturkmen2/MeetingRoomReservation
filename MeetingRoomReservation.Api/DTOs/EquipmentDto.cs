@@ -1,10 +1,9 @@
 ﻿namespace MeetingRoomReservation.Api.DTOs
 {
-    public class RoomDto
+    public class EquipmentDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public int Capacity { get; set; }
-        public List<EquipmentDto> Equipments { get; set; } = new();
+        public string? Specification { get; set; }
     }
 }

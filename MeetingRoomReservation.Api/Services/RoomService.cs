@@ -21,10 +21,19 @@ public class RoomService : IRoomService
             {
                 Id = x.Id,
                 Name = x.Name,
-                Capacity = x.Capacity
+                Capacity = x.Capacity,
+                Equipments = x.RoomEquipments
+                    .Select(re => new EquipmentDto
+                    {
+                        Id = re.Equipment.Id,
+                        Name = re.Equipment.Name,
+                        Specification = re.Equipment.Specification
+                    })
+                    .ToList()
             })
             .ToListAsync();
     }
+
 
     public async Task<RoomDto?> GetByIdAsync(int id)
     {
@@ -34,37 +43,70 @@ public class RoomService : IRoomService
             {
                 Id = x.Id,
                 Name = x.Name,
-                Capacity = x.Capacity
+                Capacity = x.Capacity,
+                Equipments = x.RoomEquipments
+                    .Select(re => new EquipmentDto
+                    {
+                        Id = re.Equipment.Id,
+                        Name = re.Equipment.Name,
+                        Specification = re.Equipment.Specification
+                    })
+                    .ToList()
             })
             .FirstOrDefaultAsync();
     }
 
-    public async Task<int> CreateAsync(CreateRoomDto dto)
+
+    public async Task CreateAsync(CreateUpdateRoomDto dto)
     {
         var room = new Room
         {
             Name = dto.Name,
             Capacity = dto.Capacity,
-            IsActive = true
+            RoomEquipments = new List<RoomEquipment>()
         };
 
-        await _context.Rooms.AddAsync(room);
-        await _context.SaveChangesAsync();
+        foreach (var equipmentId in dto.EquipmentIds)
+        {
+            room.RoomEquipments.Add(new RoomEquipment
+            {
+                EquipmentId = equipmentId
+            });
+        }
 
-        return room.Id;
+        _context.Rooms.Add(room);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(int id, CreateRoomDto dto)
+
+    public async Task UpdateAsync(int id, CreateUpdateRoomDto dto)
     {
-        var room = await _context.Rooms.FindAsync(id);
-        if (room == null || !room.IsActive)
+        var room = await _context.Rooms
+            .Include(r => r.RoomEquipments)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (room == null)
             throw new Exception("Oda bulunamadı.");
 
         room.Name = dto.Name;
         room.Capacity = dto.Capacity;
 
+        // Eski ekipmanları sil
+        room.RoomEquipments.Clear();
+
+        // Yenileri ekle
+        foreach (var equipmentId in dto.EquipmentIds)
+        {
+            room.RoomEquipments.Add(new RoomEquipment
+            {
+                RoomId = room.Id,
+                EquipmentId = equipmentId
+            });
+        }
+
         await _context.SaveChangesAsync();
     }
+
 
     public async Task DeleteAsync(int id)
     {

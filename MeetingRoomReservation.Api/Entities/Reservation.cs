@@ -13,8 +13,6 @@
 
         public int ParticipantCount { get; set; }
 
-        public bool IsActive { get; set; } = true;
-
         public int? RecurrenceId { get; set; }
         public Recurrence Recurrence { get; set; }
     }

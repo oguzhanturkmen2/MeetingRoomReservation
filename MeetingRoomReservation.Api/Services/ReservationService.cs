@@ -1,16 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MeetingRoomReservation.Api.Data;
+﻿using MeetingRoomReservation.Api.Data;
 using MeetingRoomReservation.Api.DTOs;
 using MeetingRoomReservation.Api.Entities;
 using MeetingRoomReservation.Api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class ReservationService : IReservationService
 {
     private readonly AppDbContext _context;
+    private readonly IPublicHolidayService _holidayService;
 
-    public ReservationService(AppDbContext context)
+
+    public ReservationService(AppDbContext context, IPublicHolidayService holidayService)
     {
         _context = context;
+        _holidayService = holidayService;
     }
 
     public async Task<List<Reservation>> GetAllAsync()
@@ -26,7 +30,7 @@ public class ReservationService : IReservationService
             .FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
     }
 
-    public async Task<int> CreateAsync(CreateReservationDto dto)
+    public async Task<int> CreateAsync(CreateUpdateReservationDto dto)
     {
         var conflict = await _context.Reservations
             .AnyAsync(r =>
@@ -37,6 +41,17 @@ public class ReservationService : IReservationService
 
         if (conflict)
             throw new Exception("Toplantı odası bu saat için zaten rezerve edilmiş.");
+
+        if (await _holidayService.IsPublicHolidayAsync(dto.StartDate))
+        {
+            throw new Exception("Resmi tatilde rezervasyon yapılamaz.");
+        }
+
+        if (dto.StartDate.DayOfWeek == DayOfWeek.Saturday ||
+            dto.StartDate.DayOfWeek == DayOfWeek.Sunday)
+        {
+            throw new Exception("Hafta sonu rezervasyon yapılamaz.");
+        }
 
         var reservation = new Reservation
         {
@@ -52,7 +67,7 @@ public class ReservationService : IReservationService
         return reservation.Id;
     }
 
-    public async Task UpdateAsync(int id, CreateReservationDto dto)
+    public async Task UpdateAsync(int id, CreateUpdateReservationDto dto)
     {
         var reservation = await _context.Reservations.FindAsync(id);
         if (reservation == null || !reservation.IsActive)
@@ -79,10 +94,12 @@ public class ReservationService : IReservationService
         return await _context.Reservations
             .AnyAsync(r =>
                 r.RoomId == roomId &&
-                r.IsActive &&
+                !r.IsDeleted &&
                 start < r.EndDate &&
                 end > r.StartDate);
     }
+
+
 
 }
 

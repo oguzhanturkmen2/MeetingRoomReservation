@@ -5,6 +5,5 @@
         public string Name { get; set; }
         public string? Specification { get; set; } = null;
 
-        public ICollection<RoomEquipment> RoomEquipments { get; set; }
     }
 }

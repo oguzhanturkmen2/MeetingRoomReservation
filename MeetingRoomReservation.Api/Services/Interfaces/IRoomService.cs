@@ -6,8 +6,8 @@ namespace MeetingRoomReservation.Api.Services.Interfaces
     {
         Task<List<RoomDto>> GetAllAsync();
         Task<RoomDto?> GetByIdAsync(int id);
-        Task<int> CreateAsync(CreateRoomDto dto);
-        Task UpdateAsync(int id, CreateRoomDto dto);
+        Task<int> CreateAsync(CreateUpdateRoomDto dto);
+        Task UpdateAsync(int id, CreateUpdateRoomDto dto);
         Task DeleteAsync(int id);
     }
 }

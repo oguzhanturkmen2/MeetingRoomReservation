@@ -3,7 +3,7 @@ using MeetingRoomReservation.Api.DTOs;
 
 namespace MeetingRoomReservation.Api.Validators
 {
-    public class CreateRoomDtoValidator : AbstractValidator<CreateRoomDto>
+    public class CreateRoomDtoValidator : AbstractValidator<CreateUpdateRoomDto>
     {
         public CreateRoomDtoValidator()
         {

@@ -43,10 +43,14 @@ namespace MeetingRoomReservation.Api.Data
                 .HasQueryFilter(re => !re.Room.IsDeleted && !re.Equipment.IsDeleted);
 
             modelBuilder.Entity<RoomEquipment>()
-            .HasOne(re => re.Equipment)
-            .WithMany(e => e.RoomEquipments)
-            .HasForeignKey(re => re.EquipmentId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(x => x.Room)
+            .WithMany(x => x.RoomEquipments)
+            .HasForeignKey(x => x.RoomId);
+
+            modelBuilder.Entity<RoomEquipment>()
+                .HasOne(x => x.Equipment)
+                .WithMany()
+                .HasForeignKey(x => x.EquipmentId);
 
 
         }

@@ -7,8 +7,8 @@ namespace MeetingRoomReservation.Api.Services.Interfaces
     {
         Task<List<Reservation>> GetAllAsync();
         Task<Reservation?> GetByIdAsync(int id);
-        Task<int> CreateAsync(CreateReservationDto dto);
-        Task UpdateAsync(int id, CreateReservationDto dto);
+        Task<int> CreateAsync(CreateUpdateReservationDto dto);
+        Task UpdateAsync(int id, CreateUpdateReservationDto dto);
         Task DeleteAsync(int id);
         Task<bool> HasConflictAsync(int roomId, DateTime start, DateTime end);
 

@@ -1,6 +1,6 @@
 ﻿namespace MeetingRoomReservation.Api.DTOs
 {
-    public class CreateReservationDto
+    public class CreateUpdateReservationDto
     {
         public int RoomId { get; set; }
         public DateTime StartDate { get; set; }

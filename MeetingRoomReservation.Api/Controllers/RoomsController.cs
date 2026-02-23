@@ -19,7 +19,7 @@ namespace MeetingRoomReservation.Api.Controllers
 
         // POST /api/rooms
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRoomDto dto)
+        public async Task<IActionResult> Create(CreateUpdateRoomDto dto)
         {
             var id = await _service.CreateAsync(dto);
 
@@ -49,7 +49,7 @@ namespace MeetingRoomReservation.Api.Controllers
 
         // PUT /api/rooms/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CreateRoomDto dto)
+        public async Task<IActionResult> Update(int id, CreateUpdateRoomDto dto)
         {
             await _service.UpdateAsync(id, dto);
 
